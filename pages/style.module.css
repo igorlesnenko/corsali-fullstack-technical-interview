@@ -176,6 +176,8 @@ body {
 }
 
 .preview .title {
+  display: flex;
+  align-items: center;
   width: 100%;
   border-bottom: 1px solid var(--color-border);
   font-size: 14px;

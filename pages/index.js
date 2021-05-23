@@ -9,6 +9,7 @@ import { listFiles } from '../files';
 // Used below, these need to be registered
 import MarkdownEditor from '../MarkdownEditor';
 import PlaintextEditor from '../components/PlaintextEditor';
+import SwitchButton from '../components/SwitchButton';
 
 import IconPlaintextSVG from '../public/icon-plaintext.svg';
 import IconMarkdownSVG from '../public/icon-markdown.svg';
@@ -86,10 +87,7 @@ function Previewer({ file }) {
   }, [file]);
 
   return (
-    <div className={css.preview}>
-      <div className={css.title}>{path.basename(file.name)}</div>
       <div className={css.content}>{value}</div>
-    </div>
   );
 }
 
@@ -99,13 +97,14 @@ Previewer.propTypes = {
 
 // Uncomment keys to register editors for media types
 const REGISTERED_EDITORS = {
-  // "text/plain": PlaintextEditor,
-  // "text/markdown": MarkdownEditor,
+  "text/plain": PlaintextEditor,
+  "text/markdown": MarkdownEditor,
 };
 
 function PlaintextFilesChallenge() {
   const [files, setFiles] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
+  const [preview, setPreview] = useState(false);
 
   useEffect(() => {
     const files = listFiles();
@@ -156,10 +155,48 @@ function PlaintextFilesChallenge() {
 
       <main className={css.editorWindow}>
         {activeFile && (
-          <>
-            {Editor && <Editor file={activeFile} write={write} />}
-            {!Editor && <Previewer file={activeFile} />}
-          </>
+          <div>
+            <div className={css.preview}>
+              
+              <div className={css.title}>
+                <div>{path.basename(activeFile.name)}</div>
+
+                <div style={{
+                  marginLeft: 'auto',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span
+                    style={{
+                      marginRight: '10px'
+                    }}
+                  >
+                    Preview
+                  </span>
+                  <SwitchButton
+                    checked={preview}
+                    onChange={(e) => {
+                      setPreview(e.target.checked)
+                    }}
+                  />
+                </div>
+              
+              </div>
+  
+              {Editor && (
+                <>
+                  <div>
+                
+                  </div>
+                  {preview ? 
+                    <Previewer file={activeFile} />
+                    : <Editor file={activeFile} write={write} />
+                  }
+                </>
+              )}
+              {!Editor && <Previewer file={activeFile} />}
+            </div>
+          </div>
         )}
 
         {!activeFile && (
