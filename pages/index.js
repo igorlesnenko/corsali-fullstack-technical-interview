@@ -155,47 +155,42 @@ function PlaintextFilesChallenge() {
 
       <main className={css.editorWindow}>
         {activeFile && (
-          <div>
-            <div className={css.preview}>
-              
-              <div className={css.title}>
-                <div>{path.basename(activeFile.name)}</div>
+          <div className={css.editor}>
+            <div className={css.title}>
+              <div>{path.basename(activeFile.name)}</div>
 
-                <div style={{
-                  marginLeft: 'auto',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <span
-                    style={{
-                      marginRight: '10px'
-                    }}
-                  >
-                    Preview
-                  </span>
-                  <SwitchButton
-                    checked={preview}
-                    onChange={(e) => {
-                      setPreview(e.target.checked)
-                    }}
-                  />
-                </div>
-              
+              <div style={{
+                marginLeft: 'auto',
+                display: 'flex',
+                alignItems: 'center'
+              }}>
+                <span
+                  style={{
+                    marginRight: '10px',
+                    marginLeft: '10px'
+                  }}
+                >
+                  Preview
+                </span>
+                <SwitchButton
+                  checked={preview}
+                  onChange={(e) => {
+                    setPreview(e.target.checked)
+                  }}
+                />
               </div>
-  
-              {Editor && (
-                <>
-                  <div>
-                
-                  </div>
-                  {preview ? 
-                    <Previewer file={activeFile} />
-                    : <Editor file={activeFile} write={write} />
-                  }
-                </>
-              )}
-              {!Editor && <Previewer file={activeFile} />}
+            
             </div>
+
+            {Editor && (
+              <>
+                {preview ? 
+                  <Previewer file={activeFile} />
+                  : <Editor file={activeFile} write={write} />
+                }
+              </>
+            )}
+            {!Editor && <Previewer file={activeFile} />}
           </div>
         )}
 
