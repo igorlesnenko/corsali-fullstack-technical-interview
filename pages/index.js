@@ -3,6 +3,8 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import path from 'path';
 import classNames from 'classnames';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
 
 import { listFiles } from '../files';
 
@@ -118,13 +120,59 @@ function PlaintextFilesChallenge() {
   };
 
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
+  
+  const renderFileView = () => (<>
+    {activeFile && (
+      <div className={css.editor}>
+        <div className={css.title}>
+          <div>{path.basename(activeFile.name)}</div>
+
+          <div style={{
+            marginLeft: 'auto',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+                <span
+                  style={{
+                    marginRight: '10px',
+                    marginLeft: '10px'
+                  }}
+                >
+                  Preview
+                </span>
+            <SwitchButton
+              checked={preview}
+              onChange={(e) => {
+                setPreview(e.target.checked)
+              }}
+            />
+          </div>
+
+        </div>
+
+        {Editor && (
+          <>
+            {preview ?
+              <Previewer file={activeFile} />
+              : <Editor file={activeFile} write={write} />
+            }
+          </>
+        )}
+        {!Editor && <Previewer file={activeFile} />}
+      </div>
+    )}
+
+    {!activeFile && (
+      <div className={css.empty}>Select a file to view or edit</div>
+    )}
+  </>);
 
   return (
     <div className={css.page}>
       <Head>
         <title>Corsali Engineering Challenge</title>
       </Head>
-      <aside>
+      <aside className={css.sidebar}>
         <header>
           <div className={css.tagline}>Corsali Engineering Challenge</div>
           <h1>Fun With Plaintext</h1>
@@ -153,50 +201,27 @@ function PlaintextFilesChallenge() {
         </footer>
       </aside>
 
-      <main className={css.editorWindow}>
-        {activeFile && (
-          <div className={css.editor}>
-            <div className={css.title}>
-              <div>{path.basename(activeFile.name)}</div>
-
-              <div style={{
-                marginLeft: 'auto',
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                <span
-                  style={{
-                    marginRight: '10px',
-                    marginLeft: '10px'
-                  }}
-                >
-                  Preview
-                </span>
-                <SwitchButton
-                  checked={preview}
-                  onChange={(e) => {
-                    setPreview(e.target.checked)
-                  }}
-                />
-              </div>
-            
-            </div>
-
-            {Editor && (
-              <>
-                {preview ? 
-                  <Previewer file={activeFile} />
-                  : <Editor file={activeFile} write={write} />
-                }
-              </>
-            )}
-            {!Editor && <Previewer file={activeFile} />}
+      <Hidden mdUp={true} implementation="js">
+        <Drawer 
+          anchor={'right'} 
+          open={activeFile != null} 
+          onClose={() => {
+            setActiveFile(null)
+          }}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+        >
+          <div style={{
+            padding: '20px',
+          }}>
+            {renderFileView()}
           </div>
-        )}
+        </Drawer>
+      </Hidden>
 
-        {!activeFile && (
-          <div className={css.empty}>Select a file to view or edit</div>
-        )}
+      <main className={css.editorWindow}>
+        {renderFileView()}
       </main>
     </div>
   );
