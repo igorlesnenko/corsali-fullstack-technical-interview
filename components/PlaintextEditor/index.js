@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 
 import css from './style.css';
 
-function PlaintextEditor({ file, write }) {
-  console.log(file, write);
+function PlaintextEditor({ value, onChange }) {
   return (
-    <div className={css.editor}>
-      <h3>TODO</h3>
-      <i>text/plain</i>
-    </div>
+    <textarea
+      value={value}
+      onChange={e => onChange(e.target.value)}>
+    </textarea>
   );
 }
 
 PlaintextEditor.propTypes = {
-  file: PropTypes.object,
-  write: PropTypes.func
+  value: PropTypes.string,
+  onChange: PropTypes.func
 };
 
 export default PlaintextEditor;

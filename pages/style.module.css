@@ -207,4 +207,6 @@ body {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
     monospace;
   padding: 20px;
+  height: calc(100% - var(--editor-top-padding));
+  overflow: scroll;
 }

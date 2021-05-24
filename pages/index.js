@@ -79,22 +79,14 @@ FilesTable.propTypes = {
   setActiveFile: PropTypes.func
 };
 
-function Previewer({ file }) {
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      setValue(await file.text());
-    })();
-  }, [file]);
-
+function Previewer({ value }) {
   return (
       <div className={css.content}>{value}</div>
   );
 }
 
 Previewer.propTypes = {
-  file: PropTypes.object
+  value: PropTypes.string
 };
 
 // Uncomment keys to register editors for media types
@@ -106,6 +98,7 @@ const REGISTERED_EDITORS = {
 function PlaintextFilesChallenge() {
   const [files, setFiles] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
+  const [activeFileValue, setActiveFileValue] = useState(null);
   const [preview, setPreview] = useState(false);
 
   useEffect(() => {
@@ -113,11 +106,13 @@ function PlaintextFilesChallenge() {
     setFiles(files);
   }, []);
 
-  const write = file => {
-    console.log('Writing soon... ', file.name);
-
-    // TODO: Write the file to the `files` array
-  };
+  useEffect(() => {
+    (async () => {
+      if (activeFile != null) {
+        setActiveFileValue(await activeFile.text());
+      }
+    })();
+  }, [activeFile]);
 
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
   
@@ -126,20 +121,19 @@ function PlaintextFilesChallenge() {
       <div className={css.editor}>
         <div className={css.title}>
           <div>{path.basename(activeFile.name)}</div>
-
           <div style={{
             marginLeft: 'auto',
             display: 'flex',
             alignItems: 'center'
           }}>
-                <span
-                  style={{
-                    marginRight: '10px',
-                    marginLeft: '10px'
-                  }}
-                >
-                  Preview
-                </span>
+            <span
+              style={{
+                marginRight: '10px',
+                marginLeft: '10px'
+              }}
+            >
+              Preview
+            </span>
             <SwitchButton
               checked={preview}
               onChange={(e) => {
@@ -147,18 +141,22 @@ function PlaintextFilesChallenge() {
               }}
             />
           </div>
-
         </div>
 
         {Editor && (
           <>
             {preview ?
-              <Previewer file={activeFile} />
-              : <Editor file={activeFile} write={write} />
+              <Previewer value={activeFileValue} />
+              : <Editor 
+                value={activeFileValue}
+                onChange={(value) => {
+                  setActiveFileValue(value);
+                }}
+              />
             }
           </>
         )}
-        {!Editor && <Previewer file={activeFile} />}
+        {!Editor && <Previewer value={activeFileValue} />}
       </div>
     )}
 
