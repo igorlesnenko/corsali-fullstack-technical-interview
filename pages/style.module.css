@@ -37,6 +37,8 @@ body {
   display: flex;
   flex-direction: column;
   background-color: var(--color-white);
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .page aside header {
