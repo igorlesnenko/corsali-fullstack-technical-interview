@@ -1,6 +1,7 @@
 # Dependencies
 
 - material-ui
+- lodash.debounce
 
 # Corsali Plaintext Editing
 

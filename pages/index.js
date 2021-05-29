@@ -5,6 +5,10 @@ import path from 'path';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@material-ui/core/Box';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import debounce from 'lodash.debounce';
 
 import { listFiles } from '../files';
 
@@ -95,11 +99,20 @@ const REGISTERED_EDITORS = {
   "text/markdown": MarkdownEditor,
 };
 
+function SavedIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+    </SvgIcon>
+  );
+}
+
 function PlaintextFilesChallenge() {
   const [files, setFiles] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
   const [activeFileValue, setActiveFileValue] = useState(null);
   const [preview, setPreview] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const files = listFiles();
@@ -114,13 +127,48 @@ function PlaintextFilesChallenge() {
     })();
   }, [activeFile]);
 
+  const write = (value, file, allFiles) => {
+    (async () => {
+      setSaving(true);
+      // Timeout is just for emulation of API mutation
+      setTimeout(() => {
+        const newFile = new File([value], file.name, {
+          type: file.type
+        });
+        const newFiles = allFiles.map(f => f.name === newFile.name ? newFile : f);
+        setFiles(newFiles);
+        setSaving(false);
+      }, 3000)
+    })();
+  };
+
+  const SAVE_DELAY_MS = 1000;
+
+  const debouncedSave = React.useCallback(
+    debounce(async (newValue, file, allFiles) => {
+      write(newValue, file, allFiles);
+    }, SAVE_DELAY_MS, {
+      leading: true
+    }),
+    [],
+  );
+  
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
   
   const renderFileView = () => (<>
     {activeFile && (
       <div className={css.editor}>
         <div className={css.title}>
-          <div>{path.basename(activeFile.name)}</div>
+          <Box display="flex">
+            <div>
+              {path.basename(activeFile.name)}
+            </div>
+            <Box display="flex" alignItems={'center'} ml={1}>
+              {saving ? <CircularProgress size={15} /> : (
+                <SavedIcon fontSize="small" />
+              )}
+            </Box>
+          </Box>
           <div style={{
             marginLeft: 'auto',
             display: 'flex',
@@ -147,12 +195,15 @@ function PlaintextFilesChallenge() {
           <>
             {preview ?
               <Previewer value={activeFileValue} />
-              : <Editor 
-                value={activeFileValue}
-                onChange={(value) => {
-                  setActiveFileValue(value);
-                }}
-              />
+              : (<>
+                  <Editor 
+                    value={activeFileValue}
+                    onChange={(value) => {
+                      setActiveFileValue(value);
+                      debouncedSave(value, activeFile, files);
+                    }}
+                  />
+                </>)
             }
           </>
         )}
