@@ -15,6 +15,7 @@ import { listFiles } from '../files';
 
 // Used below, these need to be registered
 import MarkdownEditor from '../components/MarkdownEditor';
+import JavascriptEditor from '../components/JavascriptEditor';
 import MarkdownPreviewer from '../components/MarkdownEditor/previewer';
 import PlaintextEditor from '../components/PlaintextEditor';
 import SwitchButton from '../components/SwitchButton';
@@ -85,20 +86,12 @@ FilesTable.propTypes = {
   setActiveFile: PropTypes.func
 };
 
-function DefaultPreviewer({ value }) {
-  return (
-      <div className={css.content}>{value}</div>
-  );
-}
-
-DefaultPreviewer.propTypes = {
-  value: PropTypes.string
-};
-
 // Uncomment keys to register editors for media types
 const REGISTERED_EDITORS = {
   "text/plain": PlaintextEditor,
   "text/markdown": MarkdownEditor,
+  "text/javascript": JavascriptEditor,
+  "application/json": JavascriptEditor,
 };
 
 const REGISTERED_PREVIEWERS = {
@@ -168,7 +161,7 @@ function PlaintextFilesChallenge() {
   );
   
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
-  const Previewer = activeFile ? REGISTERED_PREVIEWERS[activeFile.type] ?? DefaultPreviewer : null;
+  const Previewer = activeFile ? REGISTERED_PREVIEWERS[activeFile.type]  : null;
   
   const renderFileView = () => (<>
     {activeFile && (
@@ -189,6 +182,8 @@ function PlaintextFilesChallenge() {
             display: 'flex',
             alignItems: 'center'
           }}>
+            {Previewer != null && (
+            <>
             <span
               style={{
                 marginRight: '10px',
@@ -197,12 +192,15 @@ function PlaintextFilesChallenge() {
             >
               Preview
             </span>
-            <SwitchButton
-              checked={preview}
-              onChange={(e) => {
-                setPreview(e.target.checked)
-              }}
-            />
+            
+              <SwitchButton
+                checked={preview}
+                onChange={(e) => {
+                  setPreview(e.target.checked)
+                }}
+              />
+              </>
+            )}
           </div>
         </div>
 
