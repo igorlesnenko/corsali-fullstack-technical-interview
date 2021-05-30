@@ -5,6 +5,7 @@ import path from 'path';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import SvgIcon from '@material-ui/core/SvgIcon';
@@ -112,11 +113,13 @@ function SavedIcon(props) {
   );
 }
 
-// const useStyles = makeStyles({
-//   '.MuiDrawer-root': {
-//     width: 100%
-//   }, // a style rule
-// });
+function BackArrowIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M9,19l1.41-1.41L5.83,13H22V11H5.83l4.59-4.59L9,5l-7,7L9,19z"/>
+    </SvgIcon>
+  );
+}
 
 function PlaintextFilesChallenge() {
   const [files, setFiles] = useState([]);
@@ -278,9 +281,23 @@ function PlaintextFilesChallenge() {
           }}
         >
           <div style={{
-            padding: '20px',
+            padding: '0 20px 20px 20px',
             width: '100vw'
           }}>
+            <div style={{
+              padding: '10px 0px'
+            }}>
+              <Button
+                color="primary"
+                size="small"
+                startIcon={<BackArrowIcon />}
+                onClick={() => {
+                  setActiveFile(null)
+                }}
+              >
+                back
+              </Button>
+            </div>
             {renderFileView()}
           </div>
         </Drawer>
