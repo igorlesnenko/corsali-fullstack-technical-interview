@@ -1,5 +1,6 @@
 # Dependencies
 
+- react-codemirror2
 - material-ui
 - lodash.debounce
 

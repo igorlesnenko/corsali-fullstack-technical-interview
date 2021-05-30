@@ -13,23 +13,23 @@ import debounce from 'lodash.debounce';
 import { listFiles } from '../files';
 
 // Used below, these need to be registered
-import MarkdownEditor from '../MarkdownEditor';
+import MarkdownEditor from '../components/MarkdownEditor';
 import PlaintextEditor from '../components/PlaintextEditor';
 import SwitchButton from '../components/SwitchButton';
 
-import IconPlaintextSVG from '../public/icon-plaintext.svg';
-import IconMarkdownSVG from '../public/icon-markdown.svg';
-import IconJavaScriptSVG from '../public/icon-javascript.svg';
-import IconJSONSVG from '../public/icon-json.svg';
+// import IconPlaintextSVG from '../public/icon-plaintext.svg';
+// import IconMarkdownSVG from '../public/icon-markdown.svg';
+// import IconJavaScriptSVG from '../public/icon-javascript.svg';
+// import IconJSONSVG from '../public/icon-json.svg';
 
 import css from './style.module.css';
 
-const TYPE_TO_ICON = {
-  'text/plain': IconPlaintextSVG,
-  'text/markdown': IconMarkdownSVG,
-  'text/javascript': IconJavaScriptSVG,
-  'application/json': IconJSONSVG
-};
+// const TYPE_TO_ICON = {
+//   'text/plain': IconPlaintextSVG,
+//   'text/markdown': IconMarkdownSVG,
+//   'text/javascript': IconJavaScriptSVG,
+//   'application/json': IconJSONSVG
+// };
 
 function FilesTable({ files, activeFile, setActiveFile }) {
   return (
@@ -52,12 +52,12 @@ function FilesTable({ files, activeFile, setActiveFile }) {
               onClick={() => setActiveFile(file)}
             >
               <td className={css.file}>
-                <div
-                  className={css.icon}
-                  dangerouslySetInnerHTML={{
-                    __html: TYPE_TO_ICON[file.type]
-                  }}
-                ></div>
+                {/*<div*/}
+                {/*  className={css.icon}*/}
+                {/*  dangerouslySetInnerHTML={{*/}
+                {/*    __html: TYPE_TO_ICON[file.type]*/}
+                {/*  }}*/}
+                {/*></div>*/}
                 {path.basename(file.name)}
               </td>
 
@@ -138,7 +138,7 @@ function PlaintextFilesChallenge() {
         const newFiles = allFiles.map(f => f.name === newFile.name ? newFile : f);
         setFiles(newFiles);
         setSaving(false);
-      }, 3000)
+      }, 1000)
     })();
   };
 
