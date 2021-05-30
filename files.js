@@ -42,9 +42,61 @@ Thanks for trying our challenge!
   // Here is a markdown file
   const fancy = new File(
     [
-      `# Some Markdown that could be rendered and HTML
+      `# Spargit piget
 
-The *quick* brown fox, jumped **over** the lazy [dog](https://en.wikipedia.org/wiki/Dog).`
+## Vetustis a visaque vestigia
+
+Lorem markdownum lacrimis sua, nostro lecto Cynthia montes motis formam Vesta
+ubi voveo, te. Cedere ut quoque suam quam veniet pietas precesque patitur undis
+inplevit in Leucon oraque conlegerat gemit dum qua?
+
+## Iras praetemptatque datur
+
+Plura exsultatque iacit furialibus adit quantumque: vetantis **unda** membra sit
+numina. Arte sed rapinae detestatur, et lecti a caligine cum nebulas. Epotus vel
+nurusque remissos contigit nudos.
+
+Nervis diva frusta, super, ab famulae maritum: denique faciem in. Lacrimis
+lambit et armis procumbit venis. His adsuetudine oculi. Fiat [hoc iecit
+trisulcis](http://abit.io/) Acoete scorpius momordit; nomen mors ut bacchae,
+bracchia et lecto? Est ferro titubat, sic dumque truncoque auras vetusque duxit!
+
+## Philemon spectans ulvae montes et te lacrimabile
+
+Heres ancipiti, erudit vel plurima navis,; pollice Susurri satos nube honorem
+Marte dimovit incommendataque dignabere populisque, quantum. **Post cursus** ceu
+*ille*, curae lacrimae Mopsus si gente Thyneius: sed unde oraque concussit?
+Pallas es super: iussit cum Aesacon adesset aurum, fatale Panopesque dixit
+momentaque undis et quidem nuper currus ferunt. In et usus [semper o
+digna](http://www.secutum.com/) Troada, temptant afuit Denique cecidisse huc,
+volucres. Prodit ut heres tulisset beati longeque scrobe huc Venerem deum omnes
+adventuque.
+
+## Posti potita
+
+Viri mille suo equidem altus. Hoc tibi concipit valet, per habet auras ullas
+*nondum* chlamydem turba lacrimaeque committi ut mea secum, nec nubila! Orbus
+sive tecti, pars removere ardent vultus tamen obstiterit vellere rector vera?
+
+1. Et duorum
+2. Ilicet fessa
+3. Causa inque alta existit
+4. Vulnera sumimus placerent suisque iam bellicus
+
+## Stellatus opto iubet satis et oculos sacro
+
+Capillos attulit adversaque penetravit sunt Tyrrhenae auras nascentia
+[armata](http://pluvialibus.net/), terra. Tepidae oneri sunt obrutus mundi
+venere ibat hanc, caedis. Madidisque procul et frustra vulnere haerentes velle
+coniugiale fetus demisit.
+
+> Hanc pace faciendus poterit; medioque paviunt. Aer exuit est, pellitis non
+> vigor ceu esse nec ingeniis inducta. Ritu tenet sustinet: tua crede veniebat
+> flamma tamen tempus et.
+
+Et cursus radices, fidem axes, adflatuque fessa signataque marito ignes esse
+clamor. Meus credentes feto quocumque serpentigenis Hersilien se pecudes festam.
+Legatur astu circumdata contulerat aevum, percussis inguina subvolat missa.`
     ],
     '/fancy.md',
     {

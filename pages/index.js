@@ -14,6 +14,7 @@ import { listFiles } from '../files';
 
 // Used below, these need to be registered
 import MarkdownEditor from '../components/MarkdownEditor';
+import MarkdownPreviewer from '../components/MarkdownEditor/previewer';
 import PlaintextEditor from '../components/PlaintextEditor';
 import SwitchButton from '../components/SwitchButton';
 
@@ -83,13 +84,13 @@ FilesTable.propTypes = {
   setActiveFile: PropTypes.func
 };
 
-function Previewer({ value }) {
+function DefaultPreviewer({ value }) {
   return (
       <div className={css.content}>{value}</div>
   );
 }
 
-Previewer.propTypes = {
+DefaultPreviewer.propTypes = {
   value: PropTypes.string
 };
 
@@ -98,6 +99,10 @@ const REGISTERED_EDITORS = {
   "text/plain": PlaintextEditor,
   "text/markdown": MarkdownEditor,
 };
+
+const REGISTERED_PREVIEWERS = {
+  "text/markdown": MarkdownPreviewer
+}
 
 function SavedIcon(props) {
   return (
@@ -154,6 +159,7 @@ function PlaintextFilesChallenge() {
   );
   
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
+  const Previewer = activeFile ? REGISTERED_PREVIEWERS[activeFile.type] ?? DefaultPreviewer : null;
   
   const renderFileView = () => (<>
     {activeFile && (
@@ -194,7 +200,11 @@ function PlaintextFilesChallenge() {
         {Editor && (
           <>
             {preview ?
-              <Previewer value={activeFileValue} />
+              (
+                <div className={css.previewerWrapper}>
+                  <Previewer value={activeFileValue} />
+                </div>
+              )
               : (<>
                   <Editor 
                     value={activeFileValue}
@@ -207,7 +217,7 @@ function PlaintextFilesChallenge() {
             }
           </>
         )}
-        {!Editor && <Previewer value={activeFileValue} />}
+        {!Editor && <div className={css.previewerWrapper}><Previewer value={activeFileValue} /></div>}
       </div>
     )}
 
