@@ -13,6 +13,16 @@
   overflow-y: scroll;
 }
 
+@media (max-width: 960px) {
+  .editorWindow {
+    display: none;
+  }
+  
+  .page aside {
+    padding: 40px 10px
+  }
+}
+
 .page aside header {
   display: flex;
   flex-direction: column;
@@ -59,7 +69,6 @@
 
 /* Files Table */
 .files {
-  width: 540px;
   padding: 20px 0;
 }
 
@@ -158,6 +167,7 @@
   background-color: var(--color-white);
   box-shadow: 0 2px 16px hsla(0, 0%, 0%, 0.16);
   border-radius: 4px;
+  margin: auto;
 }
 
 .editor .title {

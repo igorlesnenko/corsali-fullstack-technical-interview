@@ -112,6 +112,12 @@ function SavedIcon(props) {
   );
 }
 
+// const useStyles = makeStyles({
+//   '.MuiDrawer-root': {
+//     width: 100%
+//   }, // a style rule
+// });
+
 function PlaintextFilesChallenge() {
   const [files, setFiles] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
@@ -273,6 +279,7 @@ function PlaintextFilesChallenge() {
         >
           <div style={{
             padding: '20px',
+            width: '100vw'
           }}>
             {renderFileView()}
           </div>
