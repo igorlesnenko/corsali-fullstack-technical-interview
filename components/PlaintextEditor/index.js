@@ -7,7 +7,7 @@ function PlaintextEditor({ value, onChange }) {
   return (
     <textarea
       className={css.textarea}
-      value={value}
+      value={value ?? ''}
       onChange={e => onChange(e.target.value)}>
     </textarea>
   );
