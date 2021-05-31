@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import './codemirror.css';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/xq-light.css';
 import './app.css';

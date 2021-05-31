@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown'
+import PropTypes from 'prop-types';
 
-function MarkdownPreviewer ({ value }) {
+function MarkdownPreviewer({ value }) {
   return (
     <div style={{ padding: '0 10px' }}>
     <ReactMarkdown>{value}</ReactMarkdown>
@@ -9,4 +10,7 @@ function MarkdownPreviewer ({ value }) {
   )
 }
 
+MarkdownPreviewer.propTypes = {
+  value: PropTypes.string,
+};
 export default MarkdownPreviewer;
