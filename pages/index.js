@@ -251,7 +251,10 @@ function PlaintextFilesChallenge() {
         <FilesTable
           files={files}
           activeFile={activeFile}
-          setActiveFile={setActiveFile}
+          setActiveFile={(file) => {
+            setPreview(false);
+            setActiveFile(file)
+          }}
         />
 
         <div style={{ flex: 1 }}></div>
@@ -272,7 +275,7 @@ function PlaintextFilesChallenge() {
           anchor={'right'} 
           open={activeFile != null} 
           onClose={() => {
-            setActiveFile(null)
+            setActiveFile(null);
           }}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
